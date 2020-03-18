@@ -1,8 +1,12 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { format, parseISO } from 'date-fns';
 import ApiContext from '../ApiContext'
 import config from '../config'
 import './Note.css'
+import moment from 'moment'
+import PropTypes from 'prop-types';
+
 
 export default class Note extends React.Component {
   static defaultProps ={
@@ -10,11 +14,10 @@ export default class Note extends React.Component {
   }
   static contextType = ApiContext;
 
-//event listened for delete button click
   handleClickDelete = e => {
     e.preventDefault()
     const noteId = this.props.id
-//fetch logic for the DELETE request inside component
+
     fetch(`${config.API_ENDPOINT}/notes/${noteId}`, {
       method: 'DELETE',
       headers: {
@@ -28,7 +31,6 @@ export default class Note extends React.Component {
       })
       .then(() => {
         this.context.deleteNote(noteId)
-        // allow parent to perform extra behaviour
         this.props.onDeleteNote(noteId)
       })
       .catch(error => {
@@ -58,7 +60,7 @@ export default class Note extends React.Component {
             Modified
             {' '}
             <span className='Date'>
-              { }
+              {moment().format(modified, 'MMM dd yyyy')}
             </span>
           </div>
         </div>
@@ -66,3 +68,10 @@ export default class Note extends React.Component {
     )
   }
 }
+
+Note.propTypes = {
+  handleClickDelete: PropTypes.func,
+  id: PropTypes.string,
+  modified: PropTypes.string,
+  name: PropTypes.string
+};

@@ -4,6 +4,7 @@ import ApiContext from '../ApiContext'
 import { findNote } from '../NoteHelpers'
 import './NotePageMain.css'
 
+
 export default class NotePageMain extends React.Component {
   static defaultProps = {
     match: {
@@ -25,6 +26,7 @@ export default class NotePageMain extends React.Component {
         <Note
           id={note.id}
           name={note.name}
+          modified={note.modified}
           onDeleteNote={this.handleDeleteNote}
         />
         <div className='NotePageMain__content'>

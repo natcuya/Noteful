@@ -2,17 +2,15 @@ import React, { Component } from 'react'
 import NotefulForm from '../NotefulForm/NotefulForm'
 import ApiContext from '../ApiContext'
 import config from '../config'
-import PropTypes from 'prop-types';
 import './AddFolder.css'
+import PropTypes from 'prop-types';
 
 export default class AddFolder extends Component {
- //will push a new entry onto the history instead of replacing the current one.
-    static defaultProps = {
+  static defaultProps = {
     history: {
       push: () => { }
     },
   }
-//Assign a contextType to read the current ApiContext
   static contextType = ApiContext;
 
   handleSubmit = e => {
@@ -50,7 +48,7 @@ export default class AddFolder extends Component {
             <label htmlFor='folder-name-input'>
               Name
             </label>
-            <input type='text' id='folder-name-input' name='folder-name' />
+            <input type='text' id='folder-name-input' name='folder-name' required/>
           </div>
           <div className='buttons'>
             <button type='submit'>
@@ -62,12 +60,9 @@ export default class AddFolder extends Component {
     )
   }
 }
-//use defaultProps to set default values for the props argument
-AddFolder.defaultProps = {
-  name: ''
-};
-// specifies that this is a required prop
-//allows for warning if left blank
-AddFolder.propTypes ={
-  name: PropTypes.string.isRequired
-}
+
+AddFolder.propTypes = {
+  history: PropTypes.object,
+  location: PropTypes.objectOf(PropTypes.string),
+  match: PropTypes.object
+  }
